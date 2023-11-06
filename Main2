@@ -1,0 +1,266 @@
+package bts;
+
+import java.util.Random;
+import java.util.Scanner;
+import java.util.Vector;
+
+public class Main {
+	static Scanner sc = new Scanner(System.in);
+	static Vector<Gold> vGold = new Vector<>();
+	static Vector<Diamond> vDiamond = new Vector<>();
+	
+	public static void addPenjualan() {
+		String nama, jenis;
+		int jumlahTiket, foto;
+		
+		try {
+			do {
+				System.out.print("Masukan nama anda: ");
+				nama = sc.nextLine();
+			}while(nama.length() < 3);
+			
+			do {
+				System.out.print("Masukan jumlah tiket [min 1 || max 5]: ");
+				jumlahTiket = sc.nextInt();
+				sc.nextLine();
+			}while(jumlahTiket < 1 || jumlahTiket > 5);
+			
+			do {
+				System.out.print("Pilih jenis tiket [diamond || gold]: ");
+				jenis = sc.nextLine().toLowerCase();
+			}while(!jenis.equalsIgnoreCase("diamond") && !jenis.equalsIgnoreCase("gold"));
+			
+			if(jenis.equalsIgnoreCase("diamond")) {
+				Random rd = new Random();
+				foto = rd.nextInt() * 2;
+				
+				vDiamond.add(new Diamond(nama, jumlahTiket, foto));
+				System.out.println("Tiket diamond berhasil ditambah");
+			}
+			
+			else {
+				vGold.add(new Gold(nama, jumlahTiket));
+				System.out.println("Tiket gold berhasil ditambah");
+			}
+		}catch(Exception e) {
+			System.out.println("Error");
+		}
+	}
+	
+	
+	public static void dataPenjualan() {
+		int no = 1;
+		
+		if(vGold.isEmpty() != true || vDiamond.isEmpty() != true) {
+			for(int i = 0; i < vGold.size(); i++) {
+				System.out.println("Gold Tiket");
+				System.out.println(no);
+				vGold.get(i).printData();
+				no++;
+			}
+			
+			for(int i = 0; i < vDiamond.size(); i++) {
+				System.out.println("Diamond Tiket");
+				System.out.println(no);
+				vDiamond.get(i).printData();
+				no++;
+			}
+		}
+		else {
+			System.out.println("Tidak ada data!");
+		}
+		
+	}
+	public static void updatePenjualan() {
+		String jenis, nama;
+		char hapus;
+		int no = 1;
+		
+		if(vGold.isEmpty() != true || vDiamond.isEmpty() != true) {
+			for(int i = 0; i < vGold.size(); i++) {
+				System.out.println("Gold Tiket");
+				System.out.println(no);
+				vGold.get(i).printData();
+				no++;
+			}
+			
+			for(int i = 0; i < vDiamond.size(); i++) {
+				System.out.println("Diamond Tiket");
+				System.out.println(no);
+				vDiamond.get(i).printData();
+				no++;
+			}
+			
+			System.out.print("apakah anda mau melakukan update? [Y/N]: ");
+			hapus = sc.nextLine().toLowerCase().charAt(0);
+			
+			switch(hapus) {
+			case 'y':
+				do {
+					System.out.print("Masukan nama anda: ");
+					nama = sc.nextLine();
+				}while(nama.length() < 3);
+				
+				do {
+					System.out.print("Pilih jenis tiket [diamond || gold]: ");
+					jenis = sc.nextLine().toLowerCase();
+				}while(!jenis.equalsIgnoreCase("diamond") && !jenis.equalsIgnoreCase("gold"));
+				
+				if(jenis.equalsIgnoreCase("diamond")) {
+					boolean ketemu = false;
+					for(int i = 0; i < vDiamond.size(); i++) {
+						if(vDiamond.get(i).getNama().equalsIgnoreCase(nama)) {
+							ketemu = true;
+							if(vDiamond.get(i).getStatus().equalsIgnoreCase("belum lunas")) {
+								vDiamond.get(i).setStatus("sudah lunas");
+								System.out.println("berhasil update status lunas");
+							}else {
+								System.out.println("Sudah lunas loh");
+							}
+						}
+					}
+					if(!ketemu) {
+						System.out.println("nama tidak ditemukan");
+					}
+				}
+				else {
+					boolean ketemu = false;
+					for(int i = 0; i < vGold.size(); i++) {
+						if(vGold.get(i).getNama().equalsIgnoreCase(nama)) {
+							ketemu = true;
+							if(vGold.get(i).getStatus().equalsIgnoreCase("belum lunas")) {
+								vGold.get(i).setStatus("sudah lunas");
+								System.out.println("berhasil update status lunas");
+							}else {
+								System.out.println("Sudah lunas loh");
+							}
+						}
+					}
+					if(!ketemu) {
+						System.out.println("nama tidak ditemukan");
+					}
+				}
+				break;
+			case 'n':
+				System.out.println("Baiklah");
+				break;
+			}
+		}
+		else {
+			System.out.println("Tidak ada data!");
+		}
+	}
+	public static void deletePenjualan() {
+		String jenis, nama;
+		char hapus;
+		int no = 1;
+		
+		if(vGold.isEmpty() != true || vDiamond.isEmpty() != true) {
+			for(int i = 0; i < vGold.size(); i++) {
+				System.out.println("Gold Tiket");
+				System.out.println(no);
+				vGold.get(i).printData();
+				no++;
+			}
+			
+			for(int i = 0; i < vDiamond.size(); i++) {
+				System.out.println("Diamond Tiket");
+				System.out.println(no);
+				vDiamond.get(i).printData();
+				no++;
+			}
+			
+			System.out.print("apakah anda mau melakukan delete? [Y/N]: ");
+			hapus = sc.nextLine().toLowerCase().charAt(0);
+			
+			switch(hapus) {
+			case 'y':
+				do {
+					System.out.print("Masukan nama anda: ");
+					nama = sc.nextLine();
+				}while(nama.length() < 3);
+				
+				do {
+					System.out.print("Pilih jenis tiket [diamond || gold]: ");
+					jenis = sc.nextLine().toLowerCase();
+				}while(!jenis.equalsIgnoreCase("diamond") && !jenis.equalsIgnoreCase("gold"));
+				
+				if(jenis.equalsIgnoreCase("diamond")) {
+					boolean ketemu = false;
+					for(int i = 0; i < vDiamond.size(); i++) {
+						if(vDiamond.get(i).getNama().equalsIgnoreCase(nama)) {
+							ketemu = true;
+							vDiamond.remove(i);
+							System.out.println("Data berhasil dihapus");
+						}
+					}
+					if(!ketemu) {
+						System.out.println("nama tidak ditemukan");
+					}
+				}
+				else {
+					boolean ketemu = false;
+					for(int i = 0; i < vGold.size(); i++) {
+						if(vGold.get(i).getNama().equalsIgnoreCase(nama)) {
+							ketemu = true;
+							vGold.remove(i);
+							System.out.println("Data berhasil dihapus");
+						}
+					}
+					if(!ketemu) {
+						System.out.println("nama tidak ditemukan");
+					}
+				}
+				break;
+			case 'n':
+				System.out.println("Baiklah");
+				break;
+			}
+		}
+		else {
+			System.out.println("Tidak ada data!");
+		}
+	}
+	
+	public static void Menu() {
+		int pilihan;
+		
+		do {
+			System.out.println("1. Add penjualan");
+			System.out.println("2. Data Penjualan");
+			System.out.println("3. Update Penjualan");
+			System.out.println("4. Delete Penjualan");
+			System.out.println("5. Exit");
+			System.out.print("Pilih [1-5]: ");
+			pilihan = sc.nextInt();
+			sc.nextLine();
+			switch(pilihan) {
+			case 1:
+				System.out.println("Add Penjualan");
+				addPenjualan();
+				break;
+			case 2:
+				System.out.println("Data Penjualan");
+				dataPenjualan();
+				break;
+			case 3:
+				System.out.println("Update Penjualan");
+				updatePenjualan();
+				break;
+			case 4:
+				System.out.println("Delete Penjualan");
+				deletePenjualan();
+				break;
+			case 5:
+				System.out.println("Thankyou");
+				break;
+			}
+		}while(pilihan != 5);
+	}
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Menu();
+	}
+
+}
